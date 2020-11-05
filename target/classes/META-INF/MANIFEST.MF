@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Built-By: jkorolko
+Build-Jdk: 14.0.2
+Implementation-Title: quickstart-client
+Implementation-Version: 0.0.1-SNAPSHOT
+Implementation-Vendor-Id: de.onsite
+Implementation-Vendor: JoinFaces
+Implementation-URL: http://www.example.com
+Created-By: Maven Integration for Eclipse
+

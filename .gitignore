@@ -30,3 +30,4 @@ Servers
 */.settings/
 */target/
 */target/**
+/target/

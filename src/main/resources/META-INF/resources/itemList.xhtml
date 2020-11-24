@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title>Alle Artikel</title>
+</h:head>
+		<h:form id="itemForm">
+			<h:outputText value="Artikel" style="font-size:20px"/>
+			<h:outputText value="&lt;br/&gt;" escape="false" />
+			<h:outputText value="&lt;br/&gt;" escape="false" />
+
+			<p:dataTable id="itemTable" var="item" value="#{itemBean.items}" editable="true" tableStyle="width:auto">
+
+<!-- 				<p:column headerText="Artikel">
+					<h:outputText value="#{item.itemName}" />
+				</p:column> -->
+				
+		        <p:column headerText="Artikel">
+		            <p:cellEditor>
+		                <f:facet name="output"><h:outputText value="#{item.itemName}" /></f:facet>
+		                <f:facet name="input"><p:inputText value="#{item.itemName}" label="Artikel"/></f:facet>
+		            </p:cellEditor>
+		        </p:column>
+				<p:column>
+		            <p:rowEditor />
+		        </p:column>
+			</p:dataTable>
+			
+			<h:outputText value="&lt;br/&gt;" escape="false" />
+			
+			<p:commandButton value="Add" process="@this" update="itemTable"
+                              action="#{itemBean.addNewItem()}"/>
+
+
+	
+		</h:form>
+<h:body>
+
+</h:body>
+</html>

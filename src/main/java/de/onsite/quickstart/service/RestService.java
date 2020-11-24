@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import de.onsite.quickstart.model.Item;
 import de.onsite.quickstart.model.Student;
 
 
@@ -17,10 +18,10 @@ import de.onsite.quickstart.model.Student;
  *
  */
 @Component
-public class StudentService 
+public class RestService 
 {
 
-        @Value("${restServer.studentURLWithPort}")
+        @Value("${restServer.urlWithPort}")
         private String restServerURLWithPort;
         
         
@@ -34,4 +35,13 @@ public class StudentService
         	return students;
         }
 		
+		public List<Item> retrieveAllItems() {
+        	RestTemplate restTemplate = new RestTemplate();
+        	ResponseEntity<List<Item>> itemResponse =
+        	        restTemplate.exchange(restServerURLWithPort + "/items",
+        	                    HttpMethod.GET, null, new ParameterizedTypeReference<List<Item>>() {
+        	            });
+        	List<Item> items = itemResponse.getBody();
+        	return items;
+        }
 }

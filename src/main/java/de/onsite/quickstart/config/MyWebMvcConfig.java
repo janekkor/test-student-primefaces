@@ -15,8 +15,11 @@ public class MyWebMvcConfig {
             public void addViewControllers(ViewControllerRegistry registry) {
                 registry.addViewController("/").setViewName(
                         "forward:/studentList.xhtml");
+                registry.addViewController("/students").setViewName(
+                        "forward:/studentList.xhtml");
+                registry.addViewController("/items").setViewName(
+                        "forward:/itemList.xhtml");
             }
         };
     }
-
 }

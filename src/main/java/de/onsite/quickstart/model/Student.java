@@ -10,9 +10,9 @@ public class Student
 	private String firstName;
 	private String lastName;
 
-        public Student() {
-	     //empty
-        }
+    public Student() {
+     //empty
+    }
 
 	public Student(String firstName, String lastName) {
 		super();

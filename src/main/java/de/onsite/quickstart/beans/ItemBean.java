@@ -1,5 +1,6 @@
 package de.onsite.quickstart.beans;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -8,30 +9,38 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
+import de.onsite.quickstart.model.Item;
 import de.onsite.quickstart.model.Student;
 import de.onsite.quickstart.service.RestService;
 
 
 @Component
 @SessionScope
-public class StudentBean {
+public class ItemBean {
 
 	@Autowired
 	private RestService restService;
 
 	@SuppressWarnings("unused")
-	private List<Student> students;
+	private List<Item> items;
 	
 	@PostConstruct
 	public void init() {
-		students = restService.retrieveAllStudents();
+		items = restService.retrieveAllItems();
 	}
 
-	public List<Student> getStudents() {
-		return students;
+	public void addNewItem() {
+		if(items == null) {
+			items = new ArrayList<Item>();
+		}
+		items.add(new Item("New Item"));
+	}
+	
+	public List<Item> getItems() {
+		return items;
 	}
 
-	public void setStudents(List<Student> students) {
-		this.students = students;
+	public void setItems(List<Item> items) {
+		this.items = items;
 	}	
 }

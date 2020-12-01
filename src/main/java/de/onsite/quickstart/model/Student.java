@@ -6,7 +6,7 @@ package de.onsite.quickstart.model;
  */
 public class Student
 {
-	
+	private Long id;
 	private String firstName;
 	private String lastName;
 
@@ -15,9 +15,22 @@ public class Student
     }
 
 	public Student(String firstName, String lastName) {
-		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
+	}
+	
+	public Student(Long id, String firstName, String lastName) {
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+	}
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 	
 	public String getFirstName() {
@@ -38,6 +51,6 @@ public class Student
 
 	@Override
 	public String toString() {
-		return "Student [firstName=" + firstName + ", lastName=" + lastName + "]";
+		return "Student [id= " + id + ", firstName=" + firstName + ", lastName=" + lastName + "]";
 	}
 }

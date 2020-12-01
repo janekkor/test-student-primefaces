@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
+import org.apache.commons.lang3.RandomUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
@@ -33,7 +34,22 @@ public class ItemBean {
 		if(items == null) {
 			items = new ArrayList<Item>();
 		}
-		items.add(new Item("New Item"));
+		items.add(new Item(RandomUtils.nextLong(), "New Item"));
+	}
+	
+	public void saveAllItems() {
+		items = restService.saveAllItems(items);
+	}
+	
+	public void deleteItem(Long id) {
+		assert(id != null);
+		List<Item> tempItems = new ArrayList<Item>();
+		for (Item item : items) {
+			if (id.equals(item.getId())) {
+				tempItems.add(item);
+			}
+		}
+		items.removeAll(tempItems);
 	}
 	
 	public List<Item> getItems() {

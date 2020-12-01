@@ -14,7 +14,7 @@
 			<h:outputText value="&lt;br/&gt;" escape="false" />
 			<h:outputText value="&lt;br/&gt;" escape="false" />
 
-			<p:dataTable id="itemTable" var="item" value="#{itemBean.items}" editable="true" tableStyle="width:auto">
+			<p:dataTable id="itemTable" var="item" value="#{itemBean.items}" editable="true" editMode="cell" tableStyle="width:auto">
 
 <!-- 				<p:column headerText="Artikel">
 					<h:outputText value="#{item.itemName}" />
@@ -27,7 +27,8 @@
 		            </p:cellEditor>
 		        </p:column>
 				<p:column>
-		            <p:rowEditor />
+		            <p:commandButton value="x" process="@this" update="itemTable"
+                              action="#{itemBean.deleteItem(item.id)}"/>
 		        </p:column>
 			</p:dataTable>
 			
@@ -36,7 +37,8 @@
 			<p:commandButton value="Add" process="@this" update="itemTable"
                               action="#{itemBean.addNewItem()}"/>
 
-
+			<p:commandButton value="Save" process="@this" update="itemTable"
+                              action="#{itemBean.saveAllItems()}"/>
 	
 		</h:form>
 <h:body>

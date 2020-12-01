@@ -7,6 +7,7 @@ package de.onsite.quickstart.model;
 public class Item
 {	
 	private String itemName;
+	private Long id;
 	
 	public Item() {
 		//empty
@@ -16,6 +17,19 @@ public class Item
 		this.itemName = itemName;
 	}
 	
+	public Item(Long id, String itemName) {
+		this.id = id;
+		this.itemName = itemName;
+	}
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	public String getItemName() {
 		return itemName;
 	}
@@ -26,6 +40,6 @@ public class Item
 
 	@Override
 	public String toString() {
-		return "Item [itemName=" + itemName + "]";
+		return "Item [id=" + id + ", itemName=" + itemName + "]";
 	}
 }

@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.application.FacesMessage.Severity;
+import javax.faces.context.FacesContext;
 
 import org.apache.commons.lang3.RandomUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +41,13 @@ public class ItemBean {
 	
 	public void saveAllItems() {
 		items = restService.saveAllItems(items);
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+		if (items == null) {	         
+	        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR , "Error",  "Die Daten wurden nicht gespeichert!") );
+		} else {
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO , "Success",  "Die Daten wurden erfolgreich gespeichert!") );
+		}
 	}
 	
 	public void retrieveAllItems() {

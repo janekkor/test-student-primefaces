@@ -8,8 +8,12 @@
 
 <h:head>
 	<title>Alle Artikel</title>
+	<link rel="stylesheet" href="css/items.css" />
 </h:head>
 		<h:form id="itemForm">
+			<p:growl id="growl-error" showDetail="true" severity="error"/>
+			<p:growl id="growl-success" showDetail="true" severity="info"/>
+		
 			<h:outputText value="Artikel" style="font-size:20px"/>
 			<h:outputText value="&lt;br/&gt;" escape="false" />
 			<h:outputText value="&lt;br/&gt;" escape="false" />
@@ -37,7 +41,7 @@
 			<p:commandButton value="Add" process="@this" update="itemTable"
                               action="#{itemBean.addNewItem()}"/>
 
-			<p:commandButton value="Save" process="@this" update="itemTable"
+			<p:commandButton value="Save" process="@this" update="itemTable, growl-error, growl-success"
                               action="#{itemBean.saveAllItems()}"/>
                               
 			<p:commandButton value="Refresh" process="@this" update="itemTable"

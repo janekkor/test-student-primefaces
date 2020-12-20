@@ -1,0 +1,10 @@
+/* .ui-growl {
+ 	background-color: green !important;
+ } */
+ 
+div[id="itemForm:growl-error_container"] > div {
+    background-color: red !important;
+}
+div[id="itemForm:growl-success_container"] > div{
+    background-color: green !important;
+}

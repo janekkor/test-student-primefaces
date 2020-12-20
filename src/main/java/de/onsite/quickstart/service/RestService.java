@@ -45,6 +45,7 @@ public class RestService
         	                    HttpMethod.GET, null, new ParameterizedTypeReference<List<Item>>() {
         	            });
         	List<Item> items = itemResponse.getBody();
+        	System.out.println("All items in RestService read from REST: " + items);
         	return items;
         }
 
@@ -76,7 +77,7 @@ public class RestService
 	        // Code = 200.
 	        if (result.getStatusCode() == HttpStatus.OK) {
 	        	resultItems = result.getBody();
-	            System.out.println("Result items: " + resultItems);
+	            System.out.println("Result items after save: " + resultItems);
 	        }
 			
 			return resultItems;

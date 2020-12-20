@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
 import de.onsite.quickstart.model.Item;
-import de.onsite.quickstart.model.Student;
 import de.onsite.quickstart.service.RestService;
 
 
@@ -39,6 +38,10 @@ public class ItemBean {
 	
 	public void saveAllItems() {
 		items = restService.saveAllItems(items);
+	}
+	
+	public void retrieveAllItems() {
+		items = restService.retrieveAllItems();
 	}
 	
 	public void deleteItem(Long id) {

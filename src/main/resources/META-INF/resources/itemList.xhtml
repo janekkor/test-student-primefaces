@@ -39,6 +39,9 @@
 
 			<p:commandButton value="Save" process="@this" update="itemTable"
                               action="#{itemBean.saveAllItems()}"/>
+                              
+			<p:commandButton value="Refresh" process="@this" update="itemTable"
+                              action="#{itemBean.retrieveAllItems()}"/>
 	
 		</h:form>
 <h:body>

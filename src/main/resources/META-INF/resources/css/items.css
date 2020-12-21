@@ -8,7 +8,7 @@ div[id="itemForm:growl-error_container"] > div {
 	left: 200px;
 }
 div[id="itemForm:growl-success_container"] > div {
-    background-color: green !important;
+    background-color: #ccffcc !important;
     position: fixed;
 	left: 200px;
 }

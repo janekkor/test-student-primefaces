@@ -4,7 +4,11 @@
  
 div[id="itemForm:growl-error_container"] > div {
     background-color: red !important;
+    position: fixed;
+	left: 200px;
 }
-div[id="itemForm:growl-success_container"] > div{
+div[id="itemForm:growl-success_container"] > div {
     background-color: green !important;
+    position: fixed;
+	left: 200px;
 }

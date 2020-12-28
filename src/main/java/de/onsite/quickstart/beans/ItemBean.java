@@ -27,6 +27,8 @@ public class ItemBean {
 	@SuppressWarnings("unused")
 	private List<Item> items;
 	
+	private boolean editMode = true; 
+	
 	@PostConstruct
 	public void init() {
 		items = restService.retrieveAllItems();
@@ -65,11 +67,23 @@ public class ItemBean {
 		items.removeAll(tempItems);
 	}
 	
+	public void editModeChange() {
+		editMode = !editMode;
+	}
+	
 	public List<Item> getItems() {
 		return items;
 	}
 
 	public void setItems(List<Item> items) {
 		this.items = items;
+	}
+
+	public boolean isEditMode() {
+		return editMode;
+	}
+
+	public void setEditMode(boolean editMode) {
+		this.editMode = editMode;
 	}	
 }

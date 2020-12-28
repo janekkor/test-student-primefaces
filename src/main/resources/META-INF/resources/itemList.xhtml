@@ -17,6 +17,10 @@
 			<h:outputText value="Artikel" style="font-size:20px"/>
 			<h:outputText value="&lt;br/&gt;" escape="false" />
 			<h:outputText value="&lt;br/&gt;" escape="false" />
+			
+	        <p:selectBooleanCheckbox value="#{itemBean.editMode}" itemLabel="Edit Mode" valueChangeListener="#{itemBean.editModeChange()}">
+	        	<p:ajax update="itemForm" />
+	        </p:selectBooleanCheckbox>
 
 			<p:dataTable id="itemTable" var="item" value="#{itemBean.items}" editable="true" editMode="cell" tableStyle="width:auto">
 
@@ -30,21 +34,21 @@
 		                <f:facet name="input"><p:inputText value="#{item.itemName}" label="Artikel"/></f:facet>
 		            </p:cellEditor>
 		        </p:column>
-				<p:column>
-		            <p:commandButton value="x" process="@this" update="itemTable"
+				<p:column rendered="#{itemBean.editMode}">
+		            <p:commandButton value="x" process="@this" update="itemTable" 
                               action="#{itemBean.deleteItem(item.id)}"/>
 		        </p:column>
 			</p:dataTable>
 			
 			<h:outputText value="&lt;br/&gt;" escape="false" />
 			
-			<p:commandButton value="Add" process="@this" update="itemTable"
+			<p:commandButton id="addNewItemButton" value="Add" process="@this" update="itemTable" rendered="#{itemBean.editMode}"
                               action="#{itemBean.addNewItem()}"/>
 
-			<p:commandButton value="Save" process="@this" update="itemTable, growl-error, growl-success"
+			<p:commandButton id="saveAllItemsButton" value="Save" process="@this" update="itemTable, growl-error, growl-success" rendered="#{itemBean.editMode}"
                               action="#{itemBean.saveAllItems()}"/>
                               
-			<p:commandButton value="Refresh" process="@this" update="itemTable"
+			<p:commandButton id="retrieveAllItemsButton" value="Refresh" process="@this" update="itemTable"
                               action="#{itemBean.retrieveAllItems()}"/>
 	
 		</h:form>

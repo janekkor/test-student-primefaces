@@ -67,6 +67,43 @@ public class ItemBean {
 		items.removeAll(tempItems);
 	}
 	
+	public void buyItem(Long id) {
+		assert(id != null);
+		Item doneItem = null;
+		for (Item item : items) {
+			if (id.equals(item.getId())) {
+				item.setDone(!item.isDone());
+				doneItem = item;
+				break;
+			}
+		}
+		
+		if (doneItem != null) {
+			items.remove(doneItem);
+			if (doneItem.isDone()) {
+			//add the item to the end of the list
+			items.add(doneItem);
+			} else {
+				//find first done item in the list
+				Integer firstDoneItemIndex = -1;
+				for (Item item : items) {
+					if(item.isDone()) {
+						firstDoneItemIndex = items.indexOf(item);
+						break;
+					}
+				}
+				if (firstDoneItemIndex == -1) {
+					//add the item to the end of the list
+					items.add(doneItem);
+				} else {
+					//add the item to the end of the list of the undone items
+					items.add(firstDoneItemIndex, doneItem);
+				}
+			}
+		}
+		
+	}
+	
 	public void editModeChange() {
 		editMode = !editMode;
 	}

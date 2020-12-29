@@ -24,11 +24,7 @@
 
 			<p:dataTable id="itemTable" var="item" value="#{itemBean.items}" editable="true" editMode="cell" tableStyle="width:auto">
 
-<!-- 				<p:column headerText="Artikel">
-					<h:outputText value="#{item.itemName}" />
-				</p:column> -->
-				
-		        <p:column headerText="Artikel">
+		        <p:column headerText="Artikel" rendered="#{itemBean.editMode}">
 		            <p:cellEditor>
 		                <f:facet name="output"><h:outputText value="#{item.itemName}" /></f:facet>
 		                <f:facet name="input"><p:inputText value="#{item.itemName}" label="Artikel"/></f:facet>
@@ -37,6 +33,15 @@
 				<p:column rendered="#{itemBean.editMode}">
 		            <p:commandButton value="x" process="@this" update="itemTable" 
                               action="#{itemBean.deleteItem(item.id)}"/>
+		        </p:column>
+		        
+		        <p:column headerText="Artikel" rendered="#{!itemBean.editMode}">
+		        	<p:outputLabel value="#{item.itemName}" rendered="#{!item.done}"/>
+		        	<p:outputLabel value="#{item.itemName}" style="text-decoration: line-through;" rendered="#{item.done}"/>
+		        </p:column>
+   				<p:column rendered="#{!itemBean.editMode}">
+		            <p:commandButton value="v" process="@this" update="itemTable" 
+                              action="#{itemBean.buyItem(item.id)}"/>
 		        </p:column>
 			</p:dataTable>
 			
@@ -48,7 +53,7 @@
 			<p:commandButton id="saveAllItemsButton" value="Save" process="@this" update="itemTable, growl-error, growl-success" rendered="#{itemBean.editMode}"
                               action="#{itemBean.saveAllItems()}"/>
                               
-			<p:commandButton id="retrieveAllItemsButton" value="Refresh" process="@this" update="itemTable"
+			<p:commandButton id="retrieveAllItemsButton" value="Refresh" process="@this" update="itemTable" rendered="#{itemBean.editMode}"
                               action="#{itemBean.retrieveAllItems()}"/>
 	
 		</h:form>

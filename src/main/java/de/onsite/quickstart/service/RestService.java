@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import de.onsite.quickstart.model.Item;
+import de.onsite.quickstart.model.ItemList;
 import de.onsite.quickstart.model.Student;
 
 
@@ -47,6 +48,31 @@ public class RestService
         	List<Item> items = itemResponse.getBody();
         	System.out.println("All items in RestService read from REST: " + items);
         	return items;
+        }
+		
+		public List<Item> retrieveAllItemsForItemList(Long id) {
+			System.out.println("ItemList id=" + id);
+	        RestTemplate restTemplate = new RestTemplate();
+	   	 
+	        // Data attached to the request.
+	        HttpEntity<Long> requestBody = new HttpEntity<>(id);			
+        	ResponseEntity<List<Item>> itemResponse =
+        	        restTemplate.exchange(restServerURLWithPort + "/itemsForItemList",
+        	                    HttpMethod.POST, requestBody, new ParameterizedTypeReference<List<Item>>() {
+        	            });
+        	List<Item> items = itemResponse.getBody();
+        	System.out.println("All items in RestService read from REST: " + items);
+        	return items;
+        }		
+		
+		public List<ItemList> retrieveAllItemLists() {
+        	ResponseEntity<List<ItemList>> itemListResponse =
+        	        restTemplate.exchange(restServerURLWithPort + "/itemLists",
+        	                    HttpMethod.GET, null, new ParameterizedTypeReference<List<ItemList>>() {
+        	            });
+        	List<ItemList> itemLists = itemListResponse.getBody();
+        	System.out.println("All item lists in RestService read from REST: " + itemLists);
+        	return itemLists;
         }
 
 		public Student retrieveStudentById(Long id) {

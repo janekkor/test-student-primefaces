@@ -10,53 +10,74 @@
 	<title>Alle Artikel</title>
 	<link rel="stylesheet" href="css/items.css" />
 </h:head>
-		<h:form id="itemForm">
-			<p:growl id="growl-error" showDetail="true" severity="error"/>
-			<p:growl id="growl-success" showDetail="true" severity="info"/>
-		
-			<h:outputText value="Artikel" style="font-size:20px"/>
-			<h:outputText value="&lt;br/&gt;" escape="false" />
-			<h:outputText value="&lt;br/&gt;" escape="false" />
-			
-	        <p:selectBooleanCheckbox value="#{itemBean.editMode}" itemLabel="Edit Mode" valueChangeListener="#{itemBean.editModeChange()}">
-	        	<p:ajax update="itemForm" />
-	        </p:selectBooleanCheckbox>
+<h:form id="itemForm">
+	<p:growl id="growl-error" showDetail="true" severity="error" />
+	<p:growl id="growl-success" showDetail="true" severity="info" />
 
-			<p:dataTable id="itemTable" var="item" value="#{itemBean.items}" editable="true" editMode="cell" tableStyle="width:auto">
+	<h:outputText value="&lt;br/&gt;" escape="false" />
+	<h:outputText value="&lt;br/&gt;" escape="false" />
 
-		        <p:column headerText="Artikel" rendered="#{itemBean.editMode}">
-		            <p:cellEditor>
-		                <f:facet name="output"><h:outputText value="#{item.itemName}" /></f:facet>
-		                <f:facet name="input"><p:inputText value="#{item.itemName}" label="Artikel"/></f:facet>
-		            </p:cellEditor>
-		        </p:column>
-				<p:column rendered="#{itemBean.editMode}">
-		            <p:commandButton value="x" process="@this" update="itemTable" 
-                              action="#{itemBean.deleteItem(item.id)}"/>
-		        </p:column>
-		        
-		        <p:column headerText="Artikel" rendered="#{!itemBean.editMode}">
-		        	<p:outputLabel value="#{item.itemName}" rendered="#{!item.done}"/>
-		        	<p:outputLabel value="#{item.itemName}" style="text-decoration: line-through;" rendered="#{item.done}"/>
-		        </p:column>
-   				<p:column rendered="#{!itemBean.editMode}">
-		            <p:commandButton value="v" process="@this" update="itemTable" 
-                              action="#{itemBean.buyItem(item.id)}"/>
-		        </p:column>
-			</p:dataTable>
-			
-			<h:outputText value="&lt;br/&gt;" escape="false" />
-			
-			<p:commandButton id="addNewItemButton" value="Add" process="@this" update="itemTable" rendered="#{itemBean.editMode}"
-                              action="#{itemBean.addNewItem()}"/>
+	<p:selectOneMenu converter="itemBasketConverter"
+		converterMessage="Die Konvertierung von ItemBasket hat nicht funktioniert!"
+		id="shoplist" value="#{itemBean.activeItemList}" style="width:150px">
+		<f:selectItem itemLabel="Select an item list" itemValue="" noSelectionOption="true" />
+		<f:selectItems value="#{itemBean.itemLists}" var="itemList"	itemLabel="#{itemList.listName}" itemValue="#{itemList}" />
+		<p:ajax event="change" listener="#{itemBean.onEinkaufslisteChange}"	update="itemTable" />
+	</p:selectOneMenu>
 
-			<p:commandButton id="saveAllItemsButton" value="Save" process="@this" update="itemTable, growl-error, growl-success" rendered="#{itemBean.editMode}"
-                              action="#{itemBean.saveAllItems()}"/>
-                              
-			<p:commandButton id="retrieveAllItemsButton" value="Refresh" process="@this" update="itemTable" rendered="#{itemBean.editMode}"
-                              action="#{itemBean.retrieveAllItems()}"/>
+	<h:outputText value="&lt;br/&gt;" escape="false" />
+	<h:outputText value="&lt;br/&gt;" escape="false" />
+
+	<p:selectBooleanCheckbox value="#{itemBean.editMode}" itemLabel="Edit Mode">
+		<p:ajax update="itemForm"/> 
+	</p:selectBooleanCheckbox>
 	
-		</h:form>
+	<p:dataTable id="itemTable" var="item" value="#{itemBean.items}"
+		editable="true" editMode="cell" tableStyle="width:auto">
+
+		<p:column
+			headerText="#{empty itemBean.items ? 'Artikel' : itemBean.items.get(0).itemList.listName}"
+			rendered="#{itemBean.editMode}">
+			<p:cellEditor>
+				<f:facet name="output">
+					<h:outputText value="#{item.itemName}" />
+				</f:facet>
+				<f:facet name="input">
+					<p:inputText value="#{item.itemName}" label="Artikel" />
+				</f:facet>
+			</p:cellEditor>
+		</p:column>
+		<p:column rendered="#{itemBean.editMode}">
+			<p:commandButton value="x" process="@this" update="itemTable"
+				action="#{itemBean.deleteItem(item.id)}" />
+		</p:column>
+
+		<p:column headerText="Artikel" rendered="#{!itemBean.editMode}">
+			<p:outputLabel value="#{item.itemName}" rendered="#{!item.done}" />
+			<p:outputLabel value="#{item.itemName}"
+				style="text-decoration: line-through;" rendered="#{item.done}" />
+		</p:column>
+		<p:column rendered="#{!itemBean.editMode}">
+			<p:commandButton value="v" process="@this" update="itemTable"
+				action="#{itemBean.buyItem(item.id)}" />
+		</p:column>
+	</p:dataTable>
+
+	<h:outputText value="&lt;br/&gt;" escape="false" />
+
+	<p:commandButton id="addNewItemButton" value="Add" process="@this"
+		update="itemTable" rendered="#{itemBean.editMode}"
+		action="#{itemBean.addNewItem()}" />
+
+	<p:commandButton id="saveAllItemsButton" value="Save" process="@this"
+		update="itemTable, growl-error, growl-success"
+		rendered="#{itemBean.editMode}" action="#{itemBean.saveAllItems()}" />
+
+	<p:commandButton id="retrieveAllItemsButton" value="Refresh"
+		process="@this" update="itemTable" rendered="#{itemBean.editMode}"
+		action="#{itemBean.retrieveAllItems()}" />
+		<!-- action="#{itemBean.retrieveAllItemsForCurrentItemList()}" -->
+</h:form>
 <h:body>
 
 </h:body>

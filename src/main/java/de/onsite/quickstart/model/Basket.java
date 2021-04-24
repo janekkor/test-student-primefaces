@@ -3,22 +3,22 @@ package de.onsite.quickstart.model;
 import java.util.List;
 
 /**
- * ItemList class
+ * Baket class
  *
  */
-public class ItemList
+public class Basket
 {	
 	private Long id;
-	private String listName;
+	private String basketName;
 	private List<Item> items;
 	
-	public ItemList() {
+	public Basket() {
 		//empty for hibernate
 	}
 	
-	public ItemList(Long id, String listName) {
+	public Basket(Long id, String basketName) {
 		this.id = id;
-		this.listName = listName;
+		this.basketName = basketName;
 	}
 	
 	public Long getId() {
@@ -29,12 +29,12 @@ public class ItemList
 		this.id = id;
 	}
 	
-	public String getListName() {
-		return listName;
+	public String getBasketName() {
+		return basketName;
 	}
 
-	public void setListName(String listName) {
-		this.listName = listName;
+	public void setBasketName(String basketName) {
+		this.basketName = basketName;
 	}
 	
 	public List<Item> getItems() {
@@ -49,6 +49,6 @@ public class ItemList
 	public String toString() {
 		StringBuilder sBuilder = new StringBuilder("Test ABC");
 		//items.stream().forEach(i -> sBuilder.append(i.toString()));
-		return "ItemList [id=" + id + ", listName=" + listName + "items=" + sBuilder.toString() + "]";
+		return "Basket [id=" + id + ", basketName=" + basketName + "items=" + sBuilder.toString() + "]";
 	}
 }

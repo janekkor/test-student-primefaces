@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
 import de.onsite.quickstart.model.Item;
-import de.onsite.quickstart.model.ItemList;
+import de.onsite.quickstart.model.Basket;
 import de.onsite.quickstart.service.RestService;
 
 
@@ -32,29 +32,29 @@ public class ItemBean {
 	private List<Item> allItems;
 	
 	@SuppressWarnings("unused")
-	private List<ItemList> itemLists;
+	private List<Basket> baskets;
 	
-	private ItemList activeItemList;
+	private Basket activeBasket;
 	
 	private boolean editMode = true; 
 	
 	@PostConstruct
 	public void init() {
-		itemLists = restService.retrieveAllItemLists();
-		activeItemList = itemLists.get(0);
+		baskets = restService.retrieveAllBaskets();
+		activeBasket = baskets.get(0);
 		allItems = restService.retrieveAllItems();
-		items = allItems.stream().filter(x->x.getItemList().getListName().equals(activeItemList.getListName())).collect(Collectors.toList());
+		items = allItems.stream().filter(x->x.getBasket().getBasketName().equals(activeBasket.getBasketName())).collect(Collectors.toList());
 		HttpSession session = (HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-		session.setAttribute("itemBaskets", this.itemLists);
+		session.setAttribute("itemBaskets", this.baskets);
 		System.out.println("ItemBean.init()");
 		System.out.println("editMode: " + editMode);
 	}
 	
 	
 	public void onEinkaufslisteChange() {
-		if (activeItemList != null) {
-			System.out.println("Ausgewählte Einkaufsliste: " + activeItemList.getListName());
-			items = allItems.stream().filter(x->x.getItemList().getListName().equals(activeItemList.getListName())).collect(Collectors.toList());
+		if (activeBasket != null) {
+			System.out.println("Ausgewählte Einkaufsliste: " + activeBasket.getBasketName());
+			items = allItems.stream().filter(x->x.getBasket().getBasketName().equals(activeBasket.getBasketName())).collect(Collectors.toList());
 		}
 	}
 
@@ -67,13 +67,12 @@ public class ItemBean {
 	
 	public void saveAllItems() {
 		for (Item item : items) {
-			if (item.getItemList() == null) {
-				item.setItemList(activeItemList);
+			if (item.getBasket() == null) {
+				item.setBasket(activeBasket);
 			}
 		}
-		items = restService.saveAllItems(items);
-		//items.stream().forEach(i -> if (i.setItemList() == null) i.setItemList(activeItemList));
-		//TODO: set activeItemList as the new Items list
+		restService.saveAllItems(items);
+		retrieveAllItemsForCurrentBasket();
 		
 		FacesContext context = FacesContext.getCurrentInstance();
 		if (items == null) {	         
@@ -88,14 +87,14 @@ public class ItemBean {
 		return;
 	}
 	
-	public void retrieveAllItemsForCurrentItemList() {
+	public void retrieveAllItemsForCurrentBasket() {
 		allItems = restService.retrieveAllItems();
-		items = restService.retrieveAllItemsForItemList(activeItemList.getId());
+		items = restService.retrieveAllItemsForBasketId(activeBasket.getId());
 		return;
 	}
 	
-	public void retrieveAllItemLists() {
-		itemLists = restService.retrieveAllItemLists();
+	public void retrieveAllBaskets() {
+		baskets = restService.retrieveAllBaskets();
 		return;
 	}
 	
@@ -160,12 +159,12 @@ public class ItemBean {
 		this.items = items;
 	}
 	
-	public List<ItemList> getItemLists() {
-		return itemLists;
+	public List<Basket> getBaskets() {
+		return baskets;
 	}
 
-	public void setItemLists(List<ItemList> itemLists) {
-		this.itemLists = itemLists;
+	public void setBaskets(List<Basket> baskets) {
+		this.baskets = baskets;
 	}	
 
 	public boolean isEditMode() {
@@ -177,12 +176,12 @@ public class ItemBean {
 		System.out.println("editMode set: " + editMode);
 	}
 
-	public ItemList getActiveItemList() {
-		return activeItemList;
+	public Basket getActiveBasket() {
+		return activeBasket;
 	}
 
-	public void setActiveItemList(ItemList activeItemList) {
-		this.activeItemList = activeItemList;
+	public void setActiveBasket(Basket activeBasket) {
+		this.activeBasket = activeBasket;
 	}
 
 

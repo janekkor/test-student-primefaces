@@ -19,9 +19,9 @@
 
 	<p:selectOneMenu converter="itemBasketConverter"
 		converterMessage="Die Konvertierung von ItemBasket hat nicht funktioniert!"
-		id="shoplist" value="#{itemBean.activeItemList}" style="width:150px">
-		<f:selectItem itemLabel="Select an item list" itemValue="" noSelectionOption="true" />
-		<f:selectItems value="#{itemBean.itemLists}" var="itemList"	itemLabel="#{itemList.listName}" itemValue="#{itemList}" />
+		id="shoplist" value="#{itemBean.activeBasket}" style="width:150px">
+		<!-- <f:selectItem itemLabel="Select an item list" itemValue="abc" noSelectionOption="true" /> -->
+		<f:selectItems value="#{itemBean.baskets}" var="basket"	itemLabel="#{basket.basketName}" itemValue="#{basket}" />
 		<p:ajax event="change" listener="#{itemBean.onEinkaufslisteChange}"	update="itemTable" />
 	</p:selectOneMenu>
 
@@ -36,7 +36,7 @@
 		editable="true" editMode="cell" tableStyle="width:auto">
 
 		<p:column
-			headerText="#{empty itemBean.items ? 'Artikel' : itemBean.items.get(0).itemList.listName}"
+			headerText="#{empty itemBean.items ? 'Artikel' : itemBean.activeBasket.basketName}"
 			rendered="#{itemBean.editMode}">
 			<p:cellEditor>
 				<f:facet name="output">
@@ -75,8 +75,7 @@
 
 	<p:commandButton id="retrieveAllItemsButton" value="Refresh"
 		process="@this" update="itemTable" rendered="#{itemBean.editMode}"
-		action="#{itemBean.retrieveAllItems()}" />
-		<!-- action="#{itemBean.retrieveAllItemsForCurrentItemList()}" -->
+		action="#{itemBean.retrieveAllItemsForCurrentBasket()}" />
 </h:form>
 <h:body>
 

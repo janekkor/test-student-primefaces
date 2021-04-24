@@ -8,7 +8,7 @@ public class Item
 {	
 	private Long id;
 	private String itemName;
-	private ItemList itemList;
+	private Basket basket;
 	private boolean done;
 	
 	public Item() {
@@ -36,12 +36,12 @@ public class Item
 		this.itemName = itemName;
 	}
 	
-	public ItemList getItemList() {
-		return itemList;
+	public Basket getBasket() {
+		return basket;
 	}
 	
-	public void setItemList(ItemList itemList) {
-		this.itemList = itemList;
+	public void setBasket(Basket basket) {
+		this.basket = basket;
 	}
 
 	public boolean isDone() {

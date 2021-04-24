@@ -9,22 +9,22 @@ import javax.faces.convert.FacesConverter;
 import javax.servlet.http.HttpSession;
 
 import org.primefaces.component.selectonemenu.SelectOneMenu;
-import de.onsite.quickstart.model.ItemList;
+import de.onsite.quickstart.model.Basket;
 
 @FacesConverter(value = "itemBasketConverter")
-public class ItemBasketConverter implements Converter<ItemList> {
+public class ItemBasketConverter implements Converter<Basket> {
 	
 	@Override
-	public ItemList getAsObject(FacesContext context, UIComponent component, String value) {
-		ItemList result = new ItemList(123L, "Converter List");
+	public Basket getAsObject(FacesContext context, UIComponent component, String value) {
+		Basket result = new Basket(123L, "Converter List");
 		
 	    if (component instanceof SelectOneMenu) {
 	    	HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
 	    	@SuppressWarnings("unchecked")
-			List<ItemList> itemBasketList = (List<ItemList>)(List)session.getAttribute("itemBaskets");
+			List<Basket> itemBasketList = (List<Basket>)(List)session.getAttribute("itemBaskets");
 	        //itemBasketList.forEach(basket -> basket.getListName().startsWith(value.substring(0, value.indexOf("_")))?basket:result);
-	        for (ItemList basket : itemBasketList) {
-				if (basket.getListName().equals(value)) {
+	        for (Basket basket : itemBasketList) {
+				if (basket.getBasketName().equals(value)) {
 					return basket;
 				}
 			}
@@ -33,8 +33,8 @@ public class ItemBasketConverter implements Converter<ItemList> {
 	}
 
 	@Override
-	public String getAsString(FacesContext context, UIComponent component, ItemList value) {
-		return value.getListName();
+	public String getAsString(FacesContext context, UIComponent component, Basket value) {
+		return value.getBasketName();
 	}
 
 

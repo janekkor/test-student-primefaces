@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import de.onsite.quickstart.model.Item;
-import de.onsite.quickstart.model.ItemList;
+import de.onsite.quickstart.model.Basket;
 import de.onsite.quickstart.model.Student;
 
 
@@ -50,14 +50,14 @@ public class RestService
         	return items;
         }
 		
-		public List<Item> retrieveAllItemsForItemList(Long id) {
+		public List<Item> retrieveAllItemsForBasketId(Long id) {
 			System.out.println("ItemList id=" + id);
 	        RestTemplate restTemplate = new RestTemplate();
 	   	 
 	        // Data attached to the request.
 	        HttpEntity<Long> requestBody = new HttpEntity<>(id);			
         	ResponseEntity<List<Item>> itemResponse =
-        	        restTemplate.exchange(restServerURLWithPort + "/itemsForItemList",
+        	        restTemplate.exchange(restServerURLWithPort + "/itemsForBasket",
         	                    HttpMethod.POST, requestBody, new ParameterizedTypeReference<List<Item>>() {
         	            });
         	List<Item> items = itemResponse.getBody();
@@ -65,14 +65,14 @@ public class RestService
         	return items;
         }		
 		
-		public List<ItemList> retrieveAllItemLists() {
-        	ResponseEntity<List<ItemList>> itemListResponse =
-        	        restTemplate.exchange(restServerURLWithPort + "/itemLists",
-        	                    HttpMethod.GET, null, new ParameterizedTypeReference<List<ItemList>>() {
+		public List<Basket> retrieveAllBaskets() {
+        	ResponseEntity<List<Basket>> basketResponse =
+        	        restTemplate.exchange(restServerURLWithPort + "/baskets",
+        	                    HttpMethod.GET, null, new ParameterizedTypeReference<List<Basket>>() {
         	            });
-        	List<ItemList> itemLists = itemListResponse.getBody();
-        	System.out.println("All item lists in RestService read from REST: " + itemLists);
-        	return itemLists;
+        	List<Basket> baskets = basketResponse.getBody();
+        	System.out.println("All baskets in RestService read from REST: " + baskets);
+        	return baskets;
         }
 
 		public Student retrieveStudentById(Long id) {
